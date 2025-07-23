@@ -9,7 +9,3 @@ updates:
     directory: /.github/actions/python-venv-package
     schedule:
       interval: 'weekly'
-    groups:
-      actions:
-        patterns:
-        - "actions/*"
