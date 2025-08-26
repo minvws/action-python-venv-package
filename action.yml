@@ -1,5 +1,6 @@
-name: "Python venv packager"
+name: "Create Python venv package"
 description: "Exports a Python venv package with the needed requirements installed"
+
 inputs:
   python_version:
     description: "Python version"
