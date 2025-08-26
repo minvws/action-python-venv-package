@@ -27,7 +27,6 @@ jobs:
         with:
           python_version: <python_version>
           package_file_name: <package_file_name>
-          checkout_repository: "false"
 ```
 
 Replace `<python_version>` with the Python version your project needs and replace `<package_file_name>` with the desired name for the package. See [Configuration](#configuration) for details.
@@ -38,11 +37,11 @@ In this basic example, the workflow is executed automatically on push of tags.
 
 The action has inputs. The inputs are:
 
-- `python_version`: Which version of Python version to use. For example `"3.11"` or `">=3.9 <3.14"`.
-- `package_file_name`: File name for the venv package. For example `nl-example-package`.
-- `checkout_repository`: Boolean value inside string to enable or disable checkout repository
-  in the action. For example `"true"` or `"false"`. Default `"true"`.
-- `working_directory`: Directory containing the Python project. The directory should contain
+- `python_version` (**required**): Which version of Python version to use. For example `"3.11"` or `">=3.9 <3.14"`.
+- `package_file_name` (**required**): File name for the venv package. For example `nl-example-package`.
+- `checkout_repository` (optional): Whether to checkout the repository in the action. Boolean string, for example `"true"`. Default `"false"`.
+- `split_git_requirements` (optional): Whether to split git requirements dependencies. Boolean string, for example `"false"`. Default `"true"`.
+- `working_directory` (optional): Directory containing the Python project. The directory should contain
   a `requirements.txt` file or a `pyproject.toml` file. Default `"."`.
 
 ### Result

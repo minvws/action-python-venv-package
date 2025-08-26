@@ -11,7 +11,7 @@ inputs:
   checkout_repository:
     description: "Whether to checkout the repository (true or false)"
     required: false
-    default: 'true'
+    default: 'false'
   split_git_requirements:
     description: "Whether to split git requirements dependencies (true or false)"
     required: false
