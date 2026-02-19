@@ -67,6 +67,18 @@ runs:
           echo "file_exists=false" >> $GITHUB_OUTPUT
         fi
 
+    - name: Check if uv.lock file exists
+      id: check_uv_file
+      shell: bash
+      run: |
+        if [ -f "${{ inputs.working_directory }}/uv.lock" ]; then
+          echo "::notice::uv.lock file exists"
+          echo "file_exists=true" >> $GITHUB_OUTPUT
+        else
+          echo "::notice::uv.lock file does not exist"
+          echo "file_exists=false" >> $GITHUB_OUTPUT
+        fi
+
     - name: Export requirements (when Poetry)
       if: |
         steps.check_poetry_file.outputs.file_exists == 'true' &&
@@ -77,6 +89,16 @@ runs:
         pip3 install poetry
         poetry self add poetry-plugin-export
         poetry export > requirements.txt
+
+    - name: Export requirements (when uv)
+      if: |
+        steps.check_uv_file.outputs.file_exists == 'true' &&
+        steps.check_requirements_file.outputs.file_exists == 'false'
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+      run: |
+        pip3 install uv
+        uv export --format requirements.txt --no-dev --locked > requirements.txt
 
     - name: Exit if requirements.txt file does not exist
       id: requirements-file-check
@@ -135,7 +157,7 @@ runs:
           echo "❌ No hashes found in requirements-packages.txt"
           echo "require-hashes=" >> "$GITHUB_OUTPUT"
         fi
-    
+
     - name: Show requirments
       if: steps.cache-venv.outputs.cache-hit != 'true' && inputs.split_git_requirements == 'true'
       shell: bash
